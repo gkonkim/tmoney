@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SR관리시스템 | Tmoney ITSM</title>
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== 좌측 메뉴 (셸 · 영구 유지) — Tmoney 원본 메뉴체계(6 대분류 · 37 중분류 · 123 소분류) ===== -->
+  <nav class="app-lnb">
+    <div class="lnb-logo"><span class="mark"></span>SR관리시스템</div>
+
+    <!-- depth-1: My Page (ME0800) -->
+    <div class="lnb-node">
+      <!-- ps-font-icon-layout-o -->
+      <div class="lnb-top has-children"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="2"/><path d="M10 3.5v17M10 14.5h11"/></svg></span>My Page<span class="chev">▶</span></div>
+      <div class="lnb-children">
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 서비스요청<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">인프라서비스요청</a>
+            <a class="lnb-leaf">응용서비스요청(CSR)</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 단순문의<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">인프라단순문의</a>
+            <a class="lnb-leaf">응용단순문의</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 서비스요청(병행)<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">운영관리도구신청(신규인력)</a>
+            <a class="lnb-leaf">클라우드/NW/보안 병행작업</a>
+            <a class="lnb-leaf">내부통신요청</a>
+            <a class="lnb-leaf">대외통신요청</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 나의 작업함<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf impl" href="pages/mypage.html"
+               data-src="pages/mypage.html"
+               data-path="My Page 〉 나의 작업함 〉 대기함"
+               data-label="대기함" data-id="mypage">대기함</a>
+            <a class="lnb-leaf">진행함</a>
+            <a class="lnb-leaf">완료함</a>
+            <a class="lnb-leaf">요청이력함</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- depth-1: 서비스관리 (ME0002) -->
+    <div class="lnb-node">
+      <!-- ps-font-icon-bar-chart-2 -->
+      <div class="lnb-top has-children"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="17" rx="2"/><path d="M8 16.6V8.4M12 16.6v-4.2M16 16.6V7" stroke-width="1.9"/></svg></span>서비스관리<span class="chev">▶</span></div>
+      <div class="lnb-children">
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 서비스요청현황<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">종합요청현황</a>
+            <a class="lnb-leaf">인프라서비스요청현황</a>
+            <a class="lnb-leaf">인프라단순문의현황</a>
+            <a class="lnb-leaf">응용 서비스요청현황</a>
+            <a class="lnb-leaf">응용단순문의현황</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 인프라변경관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">인프라변경등록</a>
+            <a class="lnb-leaf">인프라변경관리현황</a>
+            <a class="lnb-leaf">인프라구성(항목)변경등록</a>
+            <a class="lnb-leaf">인프라구성(항목)변경현황</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 장애/이벤트관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">장애/이벤트등록</a>
+            <a class="lnb-leaf">장애/이벤트관리현황</a>
+            <a class="lnb-leaf">재발방지대책등록</a>
+            <a class="lnb-leaf">재발방지대책현황</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 문제관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">문제등록</a>
+            <a class="lnb-leaf">문제관리현황</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 결함관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">결함등록</a>
+            <a class="lnb-leaf">결함관리현황</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· SMCT이력조회<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">작업의뢰이력조회</a>
+            <a class="lnb-leaf">CSR이력조회</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- depth-1: IT자원관리 (ME0306) -->
+    <div class="lnb-node">
+      <!-- ps-font-icon-layer-o -->
+      <div class="lnb-top has-children"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3.2L21 8l-9 4.8L3 8z"/><path d="M3.4 12.2L12 16.8l8.6-4.6"/><path d="M3.4 16.2L12 20.8l8.6-4.6"/></svg></span>IT자원관리<span class="chev">▶</span></div>
+      <div class="lnb-children">
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· IT자원구성정보관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">IT자원구성정보관리</a>
+            <a class="lnb-leaf">IT자원변경이력현황</a>
+            <a class="lnb-leaf">재현테스트</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· IT자원등록<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">IT자원등록요청(건별)</a>
+            <a class="lnb-leaf">IT자원등록요청(일괄)</a>
+            <a class="lnb-leaf">IT자원등록요청검토</a>
+            <a class="lnb-leaf">IT자원등록요청승인</a>
+            <a class="lnb-leaf">IT자원등록요청반영</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· IT자원일괄변경<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">IT자원목록조회(다운로드)</a>
+            <a class="lnb-leaf">IT자원일괄변경</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 회선관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">회선관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· IT자원현황통계<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">분류체계별현황</a>
+            <a class="lnb-leaf">연도별도입현황</a>
+            <a class="lnb-leaf">연도별폐기현황</a>
+            <a class="lnb-leaf">폐기자원조회</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· IT자원삭제(관리자)<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">IT자원삭제</a>
+            <a class="lnb-leaf">IT자원삭제이력</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· IT자원 기준정보관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">분류체계관리</a>
+            <a class="lnb-leaf">속성관리</a>
+            <a class="lnb-leaf">테이블관리</a>
+            <a class="lnb-leaf">분류체계별 속성관리</a>
+            <a class="lnb-leaf">분류체계 속성 동기화</a>
+            <a class="lnb-leaf">위치관리</a>
+            <a class="lnb-leaf">IT자원 뷰테이블 관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 사업/계약관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">유지보수계약관리</a>
+            <a class="lnb-leaf">업체관리</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- depth-1: 응용운영관리 (ME1298) -->
+    <div class="lnb-node">
+      <!-- ps-font-icon-sticky-note -->
+      <div class="lnb-top has-children"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 3.5h16v11.2L14.7 20.5H4z" fill="currentColor" stroke="none"/><path d="M14.7 20.5v-5.8H20" /></svg></span>응용운영관리<span class="chev">▶</span></div>
+      <div class="lnb-children">
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 시스템업무관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">시스템업무관리</a>
+            <a class="lnb-leaf">시스템업무조회</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 테스트관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">테스트시나리오관리</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- depth-1: 정보공유 (ME0772) -->
+    <div class="lnb-node">
+      <!-- ps-font-icon-dictionary -->
+      <div class="lnb-top has-children"><span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.4"/><path d="M8.2 3v18"/><rect x="11" y="6.4" width="5.4" height="2.4" rx=".6"/></svg></span>정보공유<span class="chev">▶</span></div>
+      <div class="lnb-children">
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 게시판<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">유형별Q&amp;A</a>
+            <a class="lnb-leaf">CSR게시판</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 지식관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">KEDB 관리</a>
+            <a class="lnb-leaf">KEDB 조회</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- depth-1: 시스템관리 (ME0005) -->
+    <div class="lnb-node">
+      <!-- ps-font-icon-settings-o -->
+      <div class="lnb-top has-children"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21.26 10.38 21.26 13.62 18.64 13.87 18.02 15.37 19.69 17.41 17.41 19.69 15.37 18.02 13.87 18.64 13.62 21.26 10.38 21.26 10.13 18.64 8.63 18.02 6.59 19.69 4.31 17.41 5.98 15.37 5.36 13.87 2.74 13.62 2.74 10.38 5.36 10.13 5.98 8.63 4.31 6.59 6.59 4.31 8.63 5.98 10.13 5.36 10.38 2.74 13.62 2.74 13.87 5.36 15.37 5.98 17.41 4.31 19.69 6.59 18.02 8.63 18.64 10.13Z" stroke-width="1.5"/><circle cx="12" cy="12" r="3.3"/></svg></span>시스템관리<span class="chev">▶</span></div>
+      <div class="lnb-children">
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 조직관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">조회대상 관리</a>
+            <a class="lnb-leaf">부서관리</a>
+            <a class="lnb-leaf">사용자관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 권한관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">메뉴관리</a>
+            <a class="lnb-leaf">메뉴권한 관리</a>
+            <a class="lnb-leaf">사용자그룹 관리</a>
+            <a class="lnb-leaf">담당자그룹 관리</a>
+            <a class="lnb-leaf">IT자원 권한관리</a>
+            <a class="lnb-leaf">홈위젯관리</a>
+            <a class="lnb-leaf">위젯그룹관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 게시판관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">공지사항관리</a>
+            <a class="lnb-leaf">통합게시판 관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 로그인관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">로그인 설정</a>
+            <a class="lnb-leaf">로그인 이력조회</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 프로세스관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">프로세스 데이터 관리</a>
+            <a class="lnb-leaf">프로세스 삭제이력</a>
+            <a class="lnb-leaf">프로세스 TASK 설정</a>
+            <a class="lnb-leaf">프로세스 권한관리</a>
+            <a class="lnb-leaf">프로세스 버전관리</a>
+            <a class="lnb-leaf">프로세스 담당자관리</a>
+            <a class="lnb-leaf">프로세스담당자일괄수정</a>
+            <a class="lnb-leaf">프로세스 강제진행</a>
+            <a class="lnb-leaf">프로세스 초기화</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 코드관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">공통코드관리</a>
+            <a class="lnb-leaf">멀티코드관리</a>
+            <a class="lnb-leaf">공휴일관리</a>
+            <a class="lnb-leaf">목록타이틀 관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 작업양식관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">작업요청양식관리</a>
+            <a class="lnb-leaf">고객사별 양식관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 현황마법사관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">현황마법사 조회</a>
+            <a class="lnb-leaf">현황마법사 등록</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· AP관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">프라퍼티관리</a>
+            <a class="lnb-leaf">스케쥴러관리</a>
+            <a class="lnb-leaf">소스관리</a>
+            <a class="lnb-leaf">프라퍼티 암호화</a>
+            <a class="lnb-leaf">사용자정의 쿼리</a>
+            <a class="lnb-leaf">SMTP 관리</a>
+            <a class="lnb-leaf">메일 템플릿 관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 서식파일관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">서식파일 관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 데이터현황관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">테이블컬럼</a>
+            <a class="lnb-leaf">현황관리</a>
+            <a class="lnb-leaf">항목설정</a>
+            <a class="lnb-leaf">현황데이타검색</a>
+            <a class="lnb-leaf">운영자현황조회</a>
+            <a class="lnb-leaf">현황조회</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 이력관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">사용자정보변경이력</a>
+            <a class="lnb-leaf">사용자그룹변경이력</a>
+            <a class="lnb-leaf">고객사정보변경이력</a>
+            <a class="lnb-leaf">로그 이력</a>
+            <a class="lnb-leaf">엑셀다운로드 이력</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 엑셀업로드<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">엑셀업로드</a>
+            <a class="lnb-leaf">엑셀속성관리</a>
+            <a class="lnb-leaf">엑셀팝업관리</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· ITSM디자인 관리<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">프로세스디자이너</a>
+            <a class="lnb-leaf">폼디자이너</a>
+            <a class="lnb-leaf">DB관리(상세)</a>
+            <a class="lnb-leaf">DB관리(개별)</a>
+          </div>
+        </div>
+        <div class="lnb-node">
+          <div class="lnb-sub has-children">· 표준연계<span class="chev">▶</span></div>
+          <div class="lnb-children">
+            <a class="lnb-leaf">표준연계조회</a>
+            <a class="lnb-leaf">표준연계관리</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ===== 우측 영역 (셸 · 헤더/탭 영구 유지, 콘텐츠만 iframe 교체) ===== -->
+  <div class="app-main">
+
+    <!-- 흰색 헤더 -->
+    <header class="app-gnb">
+      <div class="gnb-path">
+        <span class="hamburger">☰</span>
+        <span id="gnbPath">Dashboard</span>
+      </div>
+      <div class="gnb-right">
+        <span>🕐 남은시간 : 0:29:56</span>
+        <span class="icon">⬆</span>
+        <span class="icon">🗗</span>
+        <span class="icon">👤</span>
+      </div>
+    </header>
+
+    <!-- 콘텐츠 탭 바 -->
+    <div class="app-tabs" id="appTabs">
+      <div class="app-tab active" data-id="home">Home</div>
+    </div>
+
+    <!-- 콘텐츠 영역 (iframe 으로 교체) -->
+    <iframe class="content-frame" id="contentFrame" src="pages/home.html" title="콘텐츠"></iframe>
+  </div>
+</div>
+
+<script>
+(function () {
+  var frame  = document.getElementById('contentFrame');
+  var pathEl = document.getElementById('gnbPath');
+  var tabs   = document.getElementById('appTabs');
+  var HOME   = { id: 'home', src: 'pages/home.html', path: 'Dashboard', label: 'Home' };
+
+  function activate(id) {
+    Array.prototype.forEach.call(tabs.querySelectorAll('.app-tab'), function (t) {
+      t.classList.toggle('active', t.dataset.id === id);
+    });
+  }
+  function load(p) { frame.src = p.src; pathEl.textContent = p.path; }
+
+  function open(p) {
+    if (p.id !== 'home' && !tabs.querySelector('.app-tab[data-id="' + p.id + '"]')) {
+      var tab = document.createElement('div');
+      tab.className = 'app-tab';
+      tab.dataset.id = p.id;
+      tab.innerHTML = p.label + ' <span class="x">✕</span>';
+      tab.addEventListener('click', function (e) {
+        if (e.target.classList.contains('x')) { e.stopPropagation(); closeTab(p); }
+        else { load(p); activate(p.id); }
+      });
+      tabs.appendChild(tab);
+    }
+    load(p); activate(p.id);
+  }
+  function closeTab(p) {
+    var tab = tabs.querySelector('.app-tab[data-id="' + p.id + '"]');
+    if (tab) tab.remove();
+    open(HOME);
+  }
+
+  tabs.querySelector('.app-tab[data-id="home"]').addEventListener('click', function () { open(HOME); });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-src]'), function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      open({ id: el.dataset.id, src: el.dataset.src, path: el.dataset.path, label: el.dataset.label });
+    });
+  });
+
+  /* iframe(콘텐츠 화면)에서 새 탭 열기 요청 (postMessage type=openTab) */
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (d && d.type === 'openTab' && d.payload && d.payload.id && d.payload.src) open(d.payload);
+  });
+
+  /* 구현(신규·변경) 메뉴 강조 전파 — leaf(.lnb-leaf.impl)의 상위 중분류·대분류 헤더에도 .impl 부여.
+     새 화면을 추가할 때는 해당 leaf 에 class="lnb-leaf impl" 만 붙이면 트리 상단까지 자동 강조된다. */
+  Array.prototype.forEach.call(document.querySelectorAll('.lnb-leaf.impl'), function (leaf) {
+    var node = leaf.closest('.lnb-node');
+    while (node) {
+      var head = node.querySelector(':scope > .lnb-top, :scope > .lnb-sub');
+      if (head) head.classList.add('impl');
+      node = node.parentElement ? node.parentElement.closest('.lnb-node') : null;
+    }
+  });
+
+  /* 좌측 트리 펼침/접힘 (3-depth) — 헤더 클릭 시 부모 .lnb-node 토글 */
+  Array.prototype.forEach.call(
+    document.querySelectorAll('.lnb-top.has-children, .lnb-sub.has-children'),
+    function (h) {
+      h.addEventListener('click', function () {
+        h.parentElement.classList.toggle('open');
+      });
+    });
+})();
+</script>
+</body>
+</html>

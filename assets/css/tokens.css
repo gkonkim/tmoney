@@ -1,0 +1,170 @@
+/* tokens.css — ITSM 목업 디자인 토큰 (SSOT: docs/style-guide.md §1) */
+:root {
+  /* ===== Brand / Primary ===== */
+  --c-primary:        #0061C0;
+  --c-primary-hover:  #0052a3;
+  --c-label:          #2050B0;
+  --c-link:           #3355ff;
+  --c-accent-blue:    #0077CC;   /* 포인트 파랑 — 제목·탭·그룹 구분선·주요버튼·textarea 화살표 */
+
+  /* ===== Header (상단 흰색 바) ===== */
+  --c-header-bg:      #ffffff;
+  --c-header-border:  #d5dde8;
+  --c-header-text:    #333333;
+  --c-header-title:   #000000;   /* 햄버거 + 현재위치 경로 글자 — 검은색 */
+  --fs-gnb-path:      15px;      /* 현재위치 경로(ITSM Dashboard 등) */
+  --fs-hamburger:     16px;
+  --hamb-scale-x:     1.1;       /* 햄버거 3줄을 좌우로 10% 길게 (두께·간격은 유지) */
+  --fs-gnb-right:     14px;      /* 우측 알림함/남은시간/아이콘 */
+  --fs-gnb-badge:     12px;      /* 알림함 숫자 뱃지 */
+
+  /* ===== LNB (좌측 네이비 메뉴 · 전체 단색) ===== */
+  --c-gnb-bg:         #16224d;
+  --c-gnb-icon:       #ffffff;
+  --c-gnb-text:       #ffffff;
+  --c-gnb-text-dim:   #8b96b8;
+  --c-menu-impl:      #FFD400;   /* 목업 구현(신규·변경) 메뉴 강조 — 노란색 + 굵게 */
+  --fs-menu-top:      16px;
+  --fs-menu-sub:      15px;
+  --menu-icon-size:   18px;   /* 대분류 아이콘(인라인 SVG) 크기 */
+  --menu-icon-stroke: 1.7;    /* 아이콘 선 굵기 (24×24 viewBox 기준) */
+
+  /* ===== Tab (원본 캡처 inputs/home_top.jpg 실측 — 푸른색 아님, 순수 회색 계열) ===== */
+  --c-tab-bg:          #eeeeee;   /* 비활성 탭 배경 */
+  --c-tab-bar:         #f6f6f6;   /* 탭 바(빈 영역) 배경 */
+  --c-tab-border:      #cdcdcd;   /* 탭 구분선 · 탭 바 하단선 */
+  --c-tab-text:        #545454;   /* 상단 탭 비활성 글자 */
+  --c-tab-text-active: #5067D8;   /* 상단 탭 활성 글자 */
+  --tab-height:        36px;      /* 탭 높이 (기존 33px + 3px) */
+
+  /* ===== Dashboard ===== */
+  /* 바로가기 위젯 — 원본 캡처 inputs/bypass widget.jpg 실측 (1:1 픽셀 기준) */
+  --c-widget-border:  #dedee0;    /* 위젯 흰 패널 테두리 */
+  --radius-widget:    8px;        /* 위젯 패널 모서리 라운딩 */
+  --widget-pad-y:     14px;
+  --widget-pad-x:     16px;
+  --c-shortcut-bg:    #e9eff6;    /* 바로가기 카드 배경 (옅은 파랑) */
+  --c-shortcut-hover: #dfe7f2;
+  --c-shortcut-border:#c6cbdf;    /* 카드 테두리 (옅은 남보라) */
+  --radius-shortcut:  6px;        /* 카드 모서리 라운딩 */
+  --sc-height:        92px;       /* 카드 높이 */
+  --sc-gap:           17px;       /* 카드 사이 간격 */
+  --sc-inset:         16px;       /* 카드 줄의 좌우 추가 들여쓰기 (제목보다 안쪽) */
+  --sc-icon-h:        62px;       /* 아이콘 높이 = PNG 원본 크기(78×62) */
+  --sc-icon-gap:      22px;       /* 아이콘 ↔ 라벨 간격 */
+  --fs-shortcut:      13px;       /* 카드 라벨 */
+
+  /* ===== Home 히어로 배너 (원본 포털 배너 재현 · inputs/potal img2.jpg 기준 1340×507) ===== */
+  --hero-img:         url('../img/home_hero.jpg');  /* 원본 배너에서 문구 제거한 배경 사진 */
+  --hero-min-h:       440px;        /* 배너 높이 (KPI 카드 2단과 높이 정렬) — 원본 비율 2.64:1
+                                       은 background cover 로 유지(잘라내기만, 왜곡 없음) */
+  --hero-pad-y:       26px;
+  --hero-pad-x:       22px;
+  --fs-hero-title:    56px;         /* ITSM (원본 66px @1340폭 → 배너 높이 비례) */
+  --fs-hero-sub:      18px;
+  --fs-hero-desc:     14px;
+  --hero-desc-gap:    26px;         /* 부제 ↔ 환영문구 간격 */
+
+  /* ===== Accent Blues ===== */
+  --c-accent:         #33aaff;
+  --c-accent-light:   #66bbff;
+  --c-accent-dark:    #336699;
+
+  /* ===== Surfaces / Background ===== */
+  --c-bg-app:         #f3f8ff;
+  --c-bg-panel:       #ffffff;
+  --c-bg-section:     #f7f8fa;
+  --c-bg-row-alt:     #f7faff;
+  --c-bg-readonly:    #efefef;
+  --c-bg-highlight:   #f1e9a7;
+
+  /* 그리드 헤더 하늘색 변형(.grid--sky) — 원본 실시간 이벤트정보 그리드(inputs/eventPop.jpg) */
+  --c-grid-head-sky:  #eaf2fc;
+  --sb-label-width:   84px;       /* .search-box--col3 / --col4 의 라벨 열 폭 */
+  --modal-width:      1300px;     /* 모달 기본 폭 */
+  --modal-width-wide: 1400px;     /* .modal--wide — 검색조건 3개를 1행에 넣는 팝업 */
+  --ci-img:           url('../img/Tmoney_CI.png');   /* LNB 로고 CI (Tmoney T 심볼 + 글자 · 투명 배경, 원본 148×178) */
+  --ci-mark-h:        44px;   /* LNB 로고 CI 높이 — GNB 높이(50px) 안에 글자까지 보이도록 축소 */
+  --ci-mark-w:        37px;   /* = 높이 × 148/178 (원본 비율) */
+  --c-row-disabled-bg:   #f0f0f0;  /* 비활성(취소) 행 배경 — CSR 전송 현황 전송취소 행 */
+  --c-row-disabled-text: #a8a8a8;  /* 비활성(취소) 행 글자 */
+  --modal-width-csr:  1280px;      /* CSR 전송 팝업 폭 (원본 실측 ≈1280) */
+  --url-row-width:    540px;       /* 소스/산출물 URL 입력줄 폭 */
+  --modal-width-narrow: 400px;    /* .modal--narrow — 장애보고 미리보기 등 좁은 팝업 */
+  --textarea-h-4row:  88px;       /* .ta--4row — 4행 높이 textarea */
+  --textarea-h-3row:  66px;       /* .ta--3row — 3행 높이 textarea */
+
+  /* 그리드 행/헤더 높이 — .grid-scroll--rows 의 노출 행 수 계산에 쓴다 */
+  --grid-head-h:      32px;
+  --grid-row-h:       30px;
+  --grid-visible-rows: 10;        /* .grid-scroll--rows : 이 행 수까지만 보이고 이후 스크롤 */
+
+  /* ===== Borders ===== */
+  --c-border:         #c9d6e8;
+  --c-border-strong:  #99aabb;
+  --c-border-field:   #c4c4c4;
+  --c-border-grid:    #dcdcdc;
+
+  /* ===== Text ===== */
+  --c-text:           #333333;
+  --c-text-muted:     #666666;
+  --c-text-head:      #1a2b4a;
+  --c-text-label:     #333333;
+  --c-page-title:     #212121;    /* 페이지 제목 글자 (예: 장애등록) */
+
+  /* ===== 절차 흐름도 (arrow-step · 원본 processTaskBox 재현) ===== */
+  --c-flow-bg:        #eef7ff;    /* 화살표 단계 기본 배경 */
+  --c-flow-border:    #dde2e8;    /* 화살표 단계 외곽선 (비활성만 · 실측) */
+  --flow-arrow-h:     27px;       /* 화살표 바 높이 */
+  --flow-arrow-notch: calc(var(--flow-arrow-h) / 2);  /* 촉/노치 깊이 = 높이의 1/2 → 45° 촉 유지 */
+  --flow-arrow-gap:   4px;        /* 단계 사이 흰 틈 */
+  --c-flow-name:      #4589ff;    /* 단계명 글자 (비활성) — 캡처 역보정 검증값, 변경 금지 */
+  --c-flow-active:    #2793f8;    /* 현재(활성) 단계 배경 */
+  --flow-step-width:  180px;      /* 단계 박스 폭 */
+
+  /* ===== 통계 요약 타일 (점검통계조회 등 상단 집계) ===== */
+  --c-stat-bg:        #f2f7ff;    /* 타일 배경 (옅은 파랑) */
+  --stat-tile-h:      74px;       /* 타일 높이 */
+  --fs-stat-value:    26px;       /* 타일 수치 글자 */
+  --time-chip-h:      18px;       /* 시간 칩(.time-chip) 높이 — 그리드 행(30px) 안에 한 줄로 */
+
+  /* ===== Status ===== */
+  --c-status-wait:    #f0a020;
+  --c-status-progress:#0061C0;
+  --c-status-done:    #2e9e5b;
+  --c-status-reject:  #d0454c;
+  --c-required:       #ff0000;
+
+  /* ===== Typography ===== */
+  --font-base: 'Nanum Gothic', '나눔고딕', NanumGothic, '맑은 고딕',
+               'Malgun Gothic', '돋움', Dotum, arial, tahoma, sans-serif;
+  --fs-base:   12px;
+  --fs-form:   13px;
+  --fs-title:  15px;
+  --fs-small:  11px;
+  --fw-normal: 400;
+  --fw-bold:   600;
+
+  /* ===== Layout 치수 ===== */
+  --gnb-height:       50px;
+  --side-width:       220px;
+  --field-height:     28px;
+  --date-field-width: 130px;
+  --time-sel-width:   84px;
+  --time-sel-narrow:  56px;   /* .input-wrap 안의 시/분 select (날짜+시+분 묶음) */
+
+  /* 달력 위젯 (datepicker) — style-guide §17 */
+  --dp-width:         218px;  /* 팝오버 폭 (7열 × 30px + 좌우 여백) */
+  --dp-head-h:        28px;   /* 헤더(« ‹ YYYY년 M월 › ») 높이 */
+  --dp-cell-h:        26px;   /* 날짜 셀 높이 */
+
+  /* 시간대 선택 위젯 (timeslot) — style-guide §18 */
+  --tp-width:         400px;  /* 팝오버 폭 (행 라벨 + 12열 × 30px) */
+  --tp-row-label-w:   38px;   /* 행 라벨(오전/오후) 폭 */
+  --tp-cell-h:        26px;   /* 시각 셀 높이 */
+
+  --textarea-height:  150px;
+  --btn-height:       30px;
+  --radius:           2px;
+  --form-gap:         16px;
+}

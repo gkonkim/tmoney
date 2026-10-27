@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | SR관리시스템</title>
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/common.css">
+</head>
+<body class="content-page">
+<!-- 콘텐츠 전용 문서: 셸(좌측 메뉴 + 상단 헤더 + 탭)은 index.html 이 유지 -->
+<!-- 원본 Dashboard(homeWidgetDashboard) 구성: 나의 작업 건수 · 나의 요청 건수 · 나의 대기함 목록 · 공지사항 -->
+  <main class="app-content">
+    <div class="dashboard">
+
+      <div class="dash-bottom">
+        <section class="kpi">
+          <div class="kpi-title">나의 작업 건수</div>
+          <div class="kpi-total">797</div>
+          <div class="kpi-breakdown">
+            <span class="kpi-item">대기함 <b class="kpi-num--done">440</b></span>
+            <span class="kpi-item">진행함 <b class="kpi-num--blue">357</b></span>
+            <span class="kpi-item">금주완료 <b class="kpi-num--dark">0</b></span>
+            <span class="kpi-item">이달완료 <b class="kpi-num--red">0</b></span>
+          </div>
+        </section>
+        <section class="kpi">
+          <div class="kpi-title">나의 요청</div>
+          <div class="kpi-total">442</div>
+          <div class="kpi-breakdown">
+            <span class="kpi-item">접수중 <b class="kpi-num--done">0</b></span>
+            <span class="kpi-item">처리중 <b class="kpi-num--blue">329</b></span>
+            <span class="kpi-item">임시저장 <b class="kpi-num--dark">4</b></span>
+            <span class="kpi-item">완료 <b class="kpi-num--red">109</b></span>
+          </div>
+        </section>
+      </div>
+
+      <div class="dash-bottom">
+        <section class="card">
+          <div class="card-head"><span class="title">나의 대기함 목록</span>
+            <span class="more"><button class="btn btn--more">더보기</button></span></div>
+          <div class="card-body">
+            <div class="grid-scroll">
+              <table class="grid">
+                <thead><tr><th>요청번호</th><th>요청유형</th><th>처리단계</th><th>요청제목</th><th>요청자</th><th>요청일</th></tr></thead>
+                <tbody>
+                  <tr><td class="num">SR261008_09855</td><td>장애요청</td><td>승인(책임자)</td><td>@@ 장애 테스트</td><td>NKIA 관리자</td><td class="date">2026-10-08</td></tr>
+                  <tr><td class="num">SR260828_09756</td><td>변경관리</td><td>결과승인(검토자)</td><td>123213</td><td>NKIA 관리자</td><td class="date">2026-08-28</td></tr>
+                  <tr><td class="num">SR260824_09738</td><td>응용서비스요청</td><td>사전검토요청</td><td>213213213</td><td>EMS 관리자</td><td class="date">2026-08-24</td></tr>
+                  <tr><td class="num">SR260824_09737</td><td>응용서비스요청</td><td>사전검토요청</td><td>test</td><td>NKIA 관리자</td><td class="date">2026-08-24</td></tr>
+                  <tr><td class="num">SR260727_09722</td><td>변경관리</td><td>변경계획</td><td>GOE_0262</td><td>NKIA 관리자</td><td class="date">2026-07-27</td></tr>
+                  <tr><td class="num">SR260727_09719</td><td>응용서비스요청</td><td>분석</td><td>tetetete</td><td>김혜경33</td><td class="date">2026-07-27</td></tr>
+                  <tr><td class="num">SR260608_09596</td><td>응용서비스요청</td><td>결과확인</td><td>TEST</td><td>NKIA 관리자</td><td class="date">2026-06-08</td></tr>
+                  <tr><td class="num">SR260429_09385</td><td>응용서비스요청</td><td>운영이관</td><td>SR260429_09385</td><td>NKIA 관리자</td><td class="date">2026-04-29</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="card-head"><span class="title">공지사항</span>
+            <span class="more"><button class="btn btn--more">더보기</button></span></div>
+          <div class="card-body">
+            <div class="grid-scroll">
+              <table class="grid">
+                <thead><tr><th>제목</th><th>등록자</th><th>공지등록자/일자</th></tr></thead>
+                <tbody>
+                  <tr><td>시스템 정기점검 안내</td><td>NKIA 관리자</td><td class="date">2024-09-26</td></tr>
+                  <tr><td>CSR 전송 절차 변경 안내</td><td>홍인화</td><td class="date">2024-09-10</td></tr>
+                  <tr><td>공지사항 테스트</td><td>NKIA 관리자</td><td class="date">2024-06-19</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>

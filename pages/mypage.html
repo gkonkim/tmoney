@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>대기함 — My Page 〉 나의 작업함 | SR관리시스템</title>
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <script src="../assets/js/datepicker.js" defer></script>
+</head>
+<body class="content-page">
+<!-- 콘텐츠 전용 문서: 셸(좌측 메뉴 + 상단 헤더 + 탭)은 index.html 이 유지 -->
+<!-- 화면 정의서: functionMd/mypage.md
+     흐름: 나의작업함(대기함 목록) → 행 더블클릭 → [요청번호] 운영이관 문서탭 → CSR 전송 팝업 -->
+  <main class="app-content">
+
+    <!-- 인페이지 문서 탭 (원본: 나의작업함 | [SR…] 운영이관 ✕) -->
+    <div class="doc-tabs" id="docTabs">
+      <div class="doc-tab active" data-doc="list">나의작업함</div>
+      <div class="doc-tab" data-doc="detail" hidden><span class="dt-label"></span><span class="x" title="닫기">✕</span></div>
+    </div>
+
+    <!-- =====================================================================
+         문서 1 · 나의작업함 (대기함 목록)
+    ====================================================================== -->
+    <section class="doc-panel" data-doc="list">
+      <div class="page-title">검색</div>
+      <div class="search-box search-box--col3">
+        <div class="sb-field"><span class="fc-label">요청번호</span><input class="field" id="sfSr"></div>
+        <div class="sb-field"><span class="fc-label">요청유형</span>
+          <select class="field" id="sfType">
+            <option value="">-- 선 택 --</option>
+            <option>서비스요청</option><option>변경관리</option><option>장애요청</option><option>문제요청</option>
+            <option>구성항목변경관리</option><option>응용서비스요청</option><option>결함요청</option>
+            <option>단순문의(응용)</option><option>단순문의(인프라)</option>
+          </select></div>
+        <div></div>
+        <div class="sb-field"><span class="fc-label">요청자</span><input class="field" id="sfUser"></div>
+        <div class="sb-field"><span class="fc-label">현재처리자</span><input class="field" id="sfWorker"></div>
+        <div class="sb-field"><span class="fc-label">일자구분</span>
+          <select class="field" id="sfDateType"><option value="">-- 선 택 --</option><option>요청일</option><option>등록일시</option></select>
+          <div class="input-wrap input-wrap--datetime"><input class="field" placeholder="From"><button class="icon-btn" title="달력">📅</button></div>
+          <div class="input-wrap input-wrap--datetime"><input class="field" placeholder="To"><button class="icon-btn" title="달력">📅</button></div>
+        </div>
+        <div class="sb-field"><span class="fc-label">요청제목</span><input class="field" id="sfTitle"></div>
+        <div></div><div></div>
+        <div class="sb-actions sb-actions--center">
+          <button class="btn btn--primary" id="btnSearch">검 색</button>
+          <button class="btn" id="btnReset">초기화</button>
+        </div>
+      </div>
+
+      <div class="subhead">
+        <span class="title">요청목록</span>
+        <span class="meta">[ 선택 <b id="listChk">0</b> 건 ] / [ 전체 <b id="listTotal">0</b> 건 ]</span>
+        <span class="meta">행을 더블클릭하면 상세로 이동합니다. (목업 구현: SR260429_09385)</span>
+      </div>
+      <div class="grid-scroll">
+        <table class="grid" style="min-width:1200px;">
+          <thead>
+            <tr>
+              <th style="width:36px"><input type="checkbox" id="listAll"></th>
+              <th style="width:140px">요청번호</th>
+              <th style="width:120px">요청유형</th>
+              <th style="width:120px">처리단계</th>
+              <th>요청제목</th>
+              <th style="width:110px">요청자</th>
+              <th style="width:120px">현재처리자</th>
+              <th style="width:100px">요청일</th>
+              <th style="width:130px">등록일시</th>
+              <th style="width:80px">선점/해제</th>
+            </tr>
+          </thead>
+          <tbody id="listBody"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <button disabled>&laquo;</button><button disabled>&lsaquo;</button>
+        <button class="active">1</button>
+        <button disabled>&rsaquo;</button><button disabled>&raquo;</button>
+        <span class="pg-size">Size <select><option>30</option><option>50</option><option>100</option></select></span>
+        <span class="pg-info">Page 1 / 1</span>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         문서 2 · [SR260429_09385] 운영이관 (요청 상세)
+    ====================================================================== -->
+    <section class="doc-panel" data-doc="detail" hidden>
+
+      <div class="flow-head">
+        <span class="title">절차 흐름도</span>
+        <span class="spacer"></span>
+        <button class="btn btn--primary btn--sm" id="btnFoldAll">폼 펼치기</button>
+        <button class="btn btn--primary btn--sm" id="btnFoldNone">폼 접기</button>
+        <button class="btn btn--primary btn--sm">CSR게시판</button>
+      </div>
+      <div class="proc-flow" id="procFlow"></div>
+
+      <!-- 현재 단계: 운영이관 -->
+      <div class="foldable">
+        <div class="fold-head">운영이관</div>
+        <div class="fold-body">
+          <div class="subhead">
+            <span class="title">테스트 현황</span>
+            <span class="spacer"></span>
+            <button class="btn btn--primary">테스트 계획/결과</button>
+          </div>
+          <div class="grid-scroll grid-scroll--min3">
+            <table class="grid">
+              <thead><tr><th>유형</th><th style="width:16%">테스트케이스</th><th style="width:12%">성공</th><th style="width:12%">실패</th><th style="width:12%">결함</th></tr></thead>
+              <tbody>
+                <tr><td class="num">단위테스트</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+                <tr><td class="num">사용자승인테스트</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form">
+            <div class="form-row">
+              <div class="fc fc--full">
+                <span class="fc-label">소스 URL</span>
+                <div class="url-row"><input class="field" readonly value="https://svn.tmoney.example/svn/NSS"><button class="btn btn--primary">소스 목록</button></div>
+              </div>
+              <div class="fc fc--full">
+                <span class="fc-label">산출물 URL</span>
+                <div class="url-row"><input class="field" readonly value=""><button class="btn btn--primary" disabled>산출물 목록</button></div>
+              </div>
+            </div>
+            <div class="note-warn">소스 URL/산출물URL 정보가 없을 시 소스 목록/산출물 목록이 보이지 않습니다.</div>
+            <div class="form-row">
+              <div class="fc fc--span2">
+                <span class="fc-label">CSR전송유형</span>
+                <div class="radio-set">
+                  <label><input type="radio" name="csrType" value="01"> 펌웨어/앱</label>
+                  <label><input type="radio" name="csrType" value="02" checked> 운영정보</label>
+                  <label><input type="radio" name="csrType" value="03"> 대상아님</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="fc"><div class="btn-group"><button class="btn btn--primary" id="btnCsrOpen">CSR 전송</button></div></div>
+            </div>
+            <div class="form-row">
+              <div class="fc fc--full">
+                <span class="fc-label">결과확인</span>
+                <div class="textarea-wrap">
+                  <textarea class="field ta--4row"></textarea>
+                  <div class="scroll-btns"><button class="up">▲</button><button class="down">▼</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ctabs">
+            <div class="ctab active">파일정보<span class="cnt">0</span></div>
+            <div class="ctab">IT자원정보<span class="cnt">0</span></div>
+            <div class="ctab">연관SR정보<span class="cnt">0</span></div>
+          </div>
+          <div class="subhead">
+            <span class="title">첨부파일 목록</span>
+            <span class="spacer"></span>
+            <button class="btn btn--primary">파일 선택</button>
+          </div>
+          <div class="grid-scroll grid-scroll--min3">
+            <table class="grid">
+              <thead><tr><th>파일명</th><th style="width:140px">작업명</th><th style="width:110px">등록자</th><th style="width:110px">등록일</th><th style="width:80px">Size</th><th style="width:60px">삭제</th></tr></thead>
+              <tbody><tr><td class="empty" colspan="6">첨부된 파일이 없습니다.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions"><button class="btn btn--primary" id="btnDone">완료</button></div>
+
+      <!-- 이전 단계 내용 (읽기전용 · 접이식) — 요청등록은 펼침, 나머지는 접힘 -->
+      <div class="foldable js-fold">
+        <div class="fold-head">요청등록<span class="spacer"></span><button class="btn btn--sm fold-btn">접기</button></div>
+        <div class="fold-body">
+          <div class="section-title">기본 정보</div>
+          <div class="form">
+            <div class="form-row">
+              <div class="fc"><span class="fc-label">요청유형</span>
+                <select class="field" disabled><option>응용서비스요청</option></select></div>
+              <div class="fc"><span class="fc-label">요청번호</span><input class="field" readonly value="SR260429_09385"></div>
+              <div class="fc"><span class="fc-label">상위연계요청번호</span>
+                <div class="input-wrap"><input class="field" readonly><button class="icon-btn" disabled>↺</button></div></div>
+              <div class="fc"></div>
+            </div>
+            <div class="form-row">
+              <div class="fc"><span class="fc-label">요청자</span>
+                <div class="input-wrap"><input class="field" readonly value="NKIA 관리자"><button class="icon-btn" disabled>🔍</button><button class="icon-btn" disabled>↺</button></div></div>
+              <div class="fc"><span class="fc-label">요청자부서</span><input class="field" readonly value="MY TMONEY"></div>
+              <div class="fc"><span class="fc-label">등록자</span><input class="field" readonly value="NKIA 관리자"></div>
+              <div class="fc"></div>
+            </div>
+          </div>
+          <div class="section-title">요청 정보</div>
+          <div class="form">
+            <div class="form-row">
+              <div class="fc"><span class="fc-label req">시스템</span>
+                <div class="input-wrap"><input class="field" readonly value="수도권통합정산시스템"><button class="icon-btn" disabled>🔍</button><button class="icon-btn" disabled>↺</button></div></div>
+              <div class="fc"><span class="fc-label req">업무책임자</span>
+                <div class="input-wrap"><input class="field" readonly value="NKIA 관리자"><button class="icon-btn" disabled>🔍</button><button class="icon-btn" disabled>↺</button></div></div>
+              <div class="fc"><span class="fc-label req">요청일시</span>
+                <div class="input-wrap"><input class="field" readonly value="2026-04-29"><button class="icon-btn" disabled>📅</button>
+                  <select class="field field--time" disabled><option>17</option></select><select class="field field--time" disabled><option>20</option></select></div></div>
+              <div class="fc"><span class="fc-label req">완료요구일시</span>
+                <div class="input-wrap"><input class="field" readonly value="2026-05-06"><button class="icon-btn" disabled>📅</button>
+                  <select class="field field--time" disabled><option>17</option></select><select class="field field--time" disabled><option>20</option></select></div></div>
+            </div>
+            <div class="form-row">
+              <div class="fc"><span class="fc-label">업무</span><input class="field" readonly value="1회용교통카드"></div>
+              <div class="fc"><span class="fc-label">업무담당자</span><input class="field" readonly value="NKIA 관리자"></div>
+              <div class="fc"><span class="fc-label">관리부서책임자</span><input class="field" readonly value="NKIA 관리자"></div>
+              <div class="fc"><span class="fc-label req">요청부서책임자</span>
+                <div class="input-wrap"><input class="field" readonly value="NKIA 관리자"><button class="icon-btn" disabled>🔍</button><button class="icon-btn" disabled>↺</button></div></div>
+            </div>
+            <div class="form-row">
+              <div class="fc fc--full"><span class="fc-label req">제목</span><input class="field" readonly value="SR260429_09385"></div>
+            </div>
+            <div class="form-row">
+              <div class="fc fc--full"><span class="fc-label req">요청내용</span>
+                <div class="textarea-wrap">
+                  <textarea class="field" readonly>▣ 현상 및 문제점
+ -
+
+▣ 요청 내용
+ -
+ -
+ -
+
+▣ 데이터 사용 용도 및 목적/제공처
+ ※ 데이터 추출을 위한 CSR인 경우, 필수 입력항목입니다.
+ ※ 미작성 시 반려됩니다.
+ - 용도 및 목적
+ - 제공처
+
+▣ 연락처</textarea>
+                  <div class="scroll-btns"><button class="up">▲</button><button class="down">▼</button></div>
+                </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="prevFolds"></div>
+    </section>
+
+    <!-- =====================================================================
+         팝업 · CSR 전송 (원본 운영이관 단계 [CSR 전송] 팝업 재현 + mypage.md 수정사항 반영)
+    ====================================================================== -->
+    <div class="modal-overlay" id="csrModal" aria-hidden="true">
+      <div class="modal modal--csr" role="dialog" aria-modal="true" aria-label="CSR 전송">
+        <div class="modal-head">CSR 전송<span class="mh-close" data-close title="닫기">✕</span></div>
+        <div class="modal-body">
+
+          <div class="page-title">검색</div>
+          <div class="search-box search-box--nowrap">
+            <div class="sb-field">
+              <span class="fc-label">요청일</span>
+              <div class="input-wrap input-wrap--datetime"><input class="field" id="csrFrom"><button class="icon-btn" title="달력">📅</button></div>
+              <span>~</span>
+              <div class="input-wrap input-wrap--datetime"><input class="field" id="csrTo"><button class="icon-btn" title="달력">📅</button></div>
+            </div>
+            <div class="sb-actions sb-actions--center">
+              <button class="btn btn--primary" id="btnCsrSearch">검 색</button>
+              <button class="btn" id="btnCsrReset">초기화</button>
+            </div>
+          </div>
+
+          <!-- 대상 CSR : 현재 요청과 동일한 업무코드의 CSR 전체 -->
+          <div class="subhead">
+            <span class="title">대상 CSR</span>
+            <span class="meta">[ 선택 <b id="tgtChk">0</b> 건 ]</span>
+            <span class="spacer"></span>
+            <label class="opt">배포승인시험만 수행 <input type="checkbox" id="chkTestOnly"></label>
+            <button class="btn btn--primary" id="btnSend">전송</button>
+          </div>
+          <div class="grid-scroll grid-scroll--rows" style="--grid-visible-rows:5">
+            <table class="grid">
+              <thead>
+                <tr>
+                  <th style="width:36px"><input type="checkbox" id="tgtAll"></th>
+                  <th style="width:150px">요청번호</th>
+                  <th>제목</th>
+                  <th style="width:100px">요청일</th>
+                  <th style="width:110px">요청자</th>
+                  <th style="width:110px">작업단계</th>
+                </tr>
+              </thead>
+              <tbody id="tgtBody"></tbody>
+            </table>
+          </div>
+
+          <!-- CSR 전송 현황 (구 '배포/승인시험 현황') : 현재 요청번호가 속한 그룹만 · 그룹요청번호 내림차순 -->
+          <div class="subhead">
+            <span class="title">CSR 전송 현황</span>
+            <span class="meta">[ 선택 <b id="stChk">0</b> 건 ] / [ 전체 <b id="stTotal">0</b> 건 ]</span>
+            <span class="spacer"></span>
+            <button class="btn btn--primary" id="btnCancelSend">전송취소</button>
+          </div>
+          <div class="grid-scroll grid-scroll--rows" style="--grid-visible-rows:6">
+            <table class="grid" style="min-width:1040px;">
+              <thead>
+                <tr>
+                  <th style="width:36px"><input type="checkbox" id="stAll"></th>
+                  <th style="width:140px">그룹요청번호</th>
+                  <th style="width:140px">요청번호</th>
+                  <th>제목</th>
+                  <th style="width:100px">전송일자</th>
+                  <th style="width:80px">전송상태</th>
+                  <th style="width:100px">취소일자</th>
+                  <th style="width:80px">취소상태</th>
+                </tr>
+              </thead>
+              <tbody id="stBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-foot"><button class="btn btn--muted" data-close>닫 기</button></div>
+      </div>
+    </div>
+
+    <!-- 알림/확인 대화상자 (경고창) — 다른 모달 위에 뜬다 -->
+    <div class="modal-overlay modal-overlay--top" id="dlg" aria-hidden="true">
+      <div class="modal modal--narrow" role="alertdialog" aria-modal="true">
+        <div class="modal-head"><span id="dlgTitle">알림</span></div>
+        <div class="dlg-msg" id="dlgMsg"></div>
+        <div class="modal-foot">
+          <button class="btn btn--primary" id="dlgOk">확인</button>
+          <button class="btn btn--muted" id="dlgCancel">취소</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+
+  /* ---------- 공통: 날짜 ---------- */
+  function pad(n, w) { n = String(n); while (n.length < (w || 2)) n = '0' + n; return n; }
+  function ymd(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  var NOW = new Date();
+  var TODAY = ymd(NOW);
+  function monthsAgo(n) { var d = new Date(NOW); d.setMonth(d.getMonth() - n); return ymd(d); }
+
+  /* ---------- 공통: 경고창(알림/확인) ---------- */
+  var dlgOk = null;
+  function openDlg(title, msg, withCancel, onOk) {
+    $('dlgTitle').textContent = title; $('dlgMsg').textContent = msg;
+    $('dlgCancel').hidden = !withCancel; dlgOk = onOk || null;
+    $('dlg').classList.add('open');
+  }
+  function closeDlg() { $('dlg').classList.remove('open'); }
+  function uiAlert(msg) { openDlg('알림', msg, false); }
+  function uiConfirm(msg, onOk) { openDlg('확인', msg, true, onOk); }
+  $('dlgOk').addEventListener('click', function () { var f = dlgOk; closeDlg(); if (f) f(); });
+  $('dlgCancel').addEventListener('click', closeDlg);
+
+  /* =====================================================================
+     1. 나의작업함 (대기함 목록)
+  ===================================================================== */
+  var CUR_SR = 'SR260429_09385';   /* 목업으로 상세 구현한 요청 */
+  var LIST = [
+    ['SR261008_09855', '장애요청',       '승인(책임자)',     '@@ 장애 테스트',   'NKIA 관리자', 'NKIA 관리자',       '2026-10-08', '2026-10-08 11:08', ''],
+    ['SR260828_09756', '변경관리',       '결과승인(검토자)', '123213',           'NKIA 관리자', 'NKIA 관리자',       '2026-08-28', '2026-08-28 15:05', ''],
+    ['SR260824_09738', '응용서비스요청', '사전검토요청',     '213213213',        'EMS 관리자',  'NKIA 관리자',       '2026-08-24', '2026-08-24 17:58', ''],
+    ['SR260824_09737', '응용서비스요청', '사전검토요청',     'test',             'NKIA 관리자', 'NKIA 관리자',       '2026-08-24', '2026-08-24 17:57', ''],
+    ['SR260824_09736', '응용서비스요청', '사전검토요청',     'test',             'EMS 관리자',  'NKIA 관리자',       '2026-08-24', '2026-08-24 17:54', ''],
+    ['SR260727_09722', '변경관리',       '변경계획',         'GOE_0262',         'NKIA 관리자', 'NKIA 관리자',       '2026-07-27', '2026-07-27 17:25', ''],
+    ['SR260727_09719', '응용서비스요청', '분석(협)',         'tetetete',         '김혜경33',    '김혜경33,NKIA',     '2026-07-27', '2026-07-27 14:23', ''],
+    ['SR260727_09719', '응용서비스요청', '분석',             'tetetete',         '김혜경33',    '김혜경33,NKIA',     '2026-07-27', '2026-07-27 14:23', ''],
+    ['SR260608_09596', '응용서비스요청', '결과확인',         'TEST',             'NKIA 관리자', 'NKIA 관리자',       '2026-06-08', '2026-06-08 10:41', ''],
+    ['SR260605_09579', '단순문의(인프라)','문의접수',        'SR260605_09579',   '김혜경33',    'NKIA 관리자',       '2026-06-05', '2026-06-05 22:54', '✔'],
+    ['SR260605_09575', '서비스요청',     '사전검토요청',     '방화벽/VPN정책신청','NKIA 관리자','NKIA 관리자',       '2026-06-05', '2026-06-05 08:49', ''],
+    ['SR260429_09385', '응용서비스요청', '운영이관',         'SR260429_09385',   'NKIA 관리자', 'NKIA 관리자',       '2026-04-29', '2026-04-29 17:20', '']
+  ];
+  var listView = LIST.slice();
+
+  function renderList() {
+    $('listBody').innerHTML = listView.map(function (r) {
+      return '<tr class="is-openable" data-sr="' + r[0] + '">' +
+        '<td class="num"><input type="checkbox" class="list-chk"></td>' +
+        '<td class="num">' + r[0] + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2] + '</td>' +
+        '<td>' + r[3] + '</td><td class="num">' + r[4] + '</td><td class="num">' + r[5] + '</td>' +
+        '<td class="date">' + r[6] + '</td><td class="date">' + r[7] + '</td><td class="num">' + r[8] + '</td></tr>';
+    }).join('') || '<tr><td class="empty" colspan="10">조회된 요청이 없습니다.</td></tr>';
+    $('listTotal').textContent = listView.length;
+    $('listChk').textContent = 0; $('listAll').checked = false;
+  }
+  $('listBody').addEventListener('change', function () {
+    $('listChk').textContent = $('listBody').querySelectorAll('.list-chk:checked').length;
+  });
+  $('listAll').addEventListener('change', function () {
+    var on = this.checked;
+    each($('listBody').querySelectorAll('.list-chk'), function (c) { c.checked = on; });
+    $('listChk').textContent = on ? $('listBody').querySelectorAll('.list-chk').length : 0;
+  });
+  $('listBody').addEventListener('dblclick', function (e) {
+    var tr = e.target.closest('tr[data-sr]'); if (!tr) return;
+    openDetail();   /* 목업: 어느 행을 더블클릭해도 CUR_SR 상세로 진입 */
+  });
+  function has(v, q) { return !q || String(v).indexOf(q) > -1; }
+  $('btnSearch').addEventListener('click', function () {
+    var sr = $('sfSr').value.trim(), tp = $('sfType').value, us = $('sfUser').value.trim(),
+        wk = $('sfWorker').value.trim(), tt = $('sfTitle').value.trim();
+    listView = LIST.filter(function (r) {
+      return has(r[0], sr) && (!tp || r[1] === tp) && has(r[4], us) && has(r[5], wk) && has(r[3], tt);
+    });
+    renderList();
+  });
+  $('btnReset').addEventListener('click', function () {
+    ['sfSr', 'sfUser', 'sfWorker', 'sfTitle'].forEach(function (id) { $(id).value = ''; });
+    $('sfType').value = ''; $('sfDateType').value = '';
+    listView = LIST.slice(); renderList();
+  });
+  renderList();
+
+  /* =====================================================================
+     2. 문서 탭 (나의작업함 ↔ [요청번호] 운영이관)
+  ===================================================================== */
+  function showDoc(key) {
+    each(document.querySelectorAll('.doc-tab'), function (t) { t.classList.toggle('active', t.dataset.doc === key); });
+    each(document.querySelectorAll('.doc-panel'), function (p) { p.hidden = p.dataset.doc !== key; });
+  }
+  var detailTab = document.querySelector('.doc-tab[data-doc="detail"]');
+  function openDetail() {
+    detailTab.querySelector('.dt-label').textContent = '[' + CUR_SR + '] 운영이관';
+    detailTab.hidden = false; showDoc('detail'); scrollFlowToActive();
+  }
+  $('docTabs').addEventListener('click', function (e) {
+    var tab = e.target.closest('.doc-tab'); if (!tab) return;
+    if (e.target.classList.contains('x')) { tab.hidden = true; showDoc('list'); return; }
+    showDoc(tab.dataset.doc);
+  });
+
+  /* =====================================================================
+     3. 절차 흐름도 (원본 SR260429_09385 이력) · 이전 단계 접기 패널
+  ===================================================================== */
+  var USER = 'NKIA 관리자';
+  var FLOW = [
+    { name: '요청등록',               s: '2026-04-29 17:20', e: '2026-04-29 17:20' },
+    { name: '사전검토요청',           s: '2026-04-29 17:20', e: '2026-04-29 17:21' },
+    { name: '요청부서 책임자승인',    s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
+    { name: '관리부서 책임자승인',    s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
+    { name: '접수',                   s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
+    { name: '분석',                   s: '2026-04-29 17:21', e: '2026-04-29 17:22' },
+    { name: '[협업] 분석(협)',        s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
+    { name: '개발부서 책임자승인',    s: '2026-04-29 17:22', e: '2026-04-29 17:22' },
+    { name: '설계/개발',              s: '2026-04-29 17:22', e: '2026-04-29 17:23' },
+    { name: '[협업] 설계/개발(협)',   s: '2026-04-29 17:22', e: '2026-04-29 17:22' },
+    { name: '3자 단위테스트',         s: '2026-04-29 17:23', e: '2026-04-29 17:23' },
+    { name: '[협업] 3자 단위테스트(협)', s: '2026-04-29 17:23', e: '2026-04-29 17:23' },
+    { name: '사용자승인 테스트',      s: '2026-04-29 17:23', e: '2026-04-29 17:23' },
+    { name: '운영이관',               s: '2026-04-29 17:23', e: '' }
+  ];
+  var ACTIVE = FLOW.length - 1;
+  function info(t, v) {
+    return '<div class="proc-info"><span class="proc-info-title">' + t + '</span> <span class="proc-info-text">' + (v || '') + '</span></div>';
+  }
+  $('procFlow').innerHTML = FLOW.map(function (s, i) {
+    return '<div class="proc-step"><div class="proc-arrow' + (i === ACTIVE ? ' active' : '') +
+      '"><span class="proc-name">' + s.name + '</span></div>' +
+      info('담당', USER) + info('시작', s.s) + info('종료', s.e) + '</div>';
+  }).join('');
+  /* 원본처럼 현재 단계가 보이도록 흐름도를 오른쪽 끝으로 스크롤 */
+  function scrollFlowToActive() { var f = $('procFlow'); f.scrollLeft = f.scrollWidth; }
+
+  /* 요청등록 이후 ~ 사용자승인 테스트 : 접힌 상태의 읽기전용 패널 (협업 단계는 상위 단계에 포함) */
+  $('prevFolds').innerHTML = FLOW.slice(1, ACTIVE).filter(function (s) { return s.name.indexOf('[협업]') !== 0; })
+    .map(function (s) {
+      return '<div class="foldable js-fold collapsed">' +
+        '<div class="fold-head">' + s.name + '<span class="spacer"></span><button class="btn btn--sm fold-btn">열기</button></div>' +
+        '<div class="fold-body"><div class="form"><div class="form-row">' +
+          '<div class="fc"><span class="fc-label">처리자</span><input class="field" readonly value="' + USER + '"></div>' +
+          '<div class="fc"><span class="fc-label">시작일시</span><input class="field" readonly value="' + s.s + '"></div>' +
+          '<div class="fc"><span class="fc-label">종료일시</span><input class="field" readonly value="' + s.e + '"></div>' +
+          '<div class="fc"></div>' +
+          '<div class="fc fc--full"><span class="fc-label">의견</span><textarea class="field ta--3row" readonly></textarea></div>' +
+        '</div></div></div></div>';
+    }).join('');
+
+  function setFold(box, collapsed) {
+    box.classList.toggle('collapsed', collapsed);
+    var b = box.querySelector('.fold-btn'); if (b) b.textContent = collapsed ? '열기' : '접기';
+  }
+  document.addEventListener('click', function (e) {
+    var head = e.target.closest('.js-fold > .fold-head'); if (!head) return;
+    var box = head.parentElement; setFold(box, !box.classList.contains('collapsed'));
+  });
+  $('btnFoldAll').addEventListener('click', function () { each(document.querySelectorAll('.js-fold'), function (b) { setFold(b, false); }); });
+  $('btnFoldNone').addEventListener('click', function () { each(document.querySelectorAll('.js-fold'), function (b) { setFold(b, true); }); });
+  $('btnDone').addEventListener('click', function () { uiAlert('운영이관 완료 처리는 목업 범위 외입니다.\n(백엔드 미연동)'); });
+
+  /* =====================================================================
+     4. CSR 전송 팝업
+       - 대상 CSR   : 현재 요청과 동일한 업무코드(BIZ)의 CSR 전체, 요청일 기간으로 검색
+       - CSR 전송 현황 : 현재 요청번호(CUR_SR)를 포함한 그룹만, 그룹요청번호 내림차순
+  ===================================================================== */
+  var BIZ = { code: 'SFZ', name: '1회용교통카드' };   /* SR260429_09385 의 업무 */
+  var TARGETS = [
+    { no: 'SR260429_09385', title: 'SR260429_09385',                       date: '2026-04-29', user: 'NKIA 관리자', step: '운영이관' },
+    { no: 'SR260601_09563', title: '@@test@@test@@test@@test@@test@@test', date: '2026-06-01', user: 'NKIA 관리자', step: '설계/개발' },
+    { no: 'SR260602_09564', title: 'SR260602_09564',                       date: '2026-06-02', user: 'NKIA 관리자', step: '요청종료' },
+    { no: 'SR260608_09595', title: 'SR260608_09595',                       date: '2026-06-08', user: '김혜경33',    step: '요청종료' },
+    { no: 'SR260317_08425', title: 'SR260317_08420',                       date: '2026-03-17', user: 'NKIA 관리자', step: '요청종료' }
+  ];
+  function titleOf(no) { for (var i = 0; i < TARGETS.length; i++) if (TARGETS[i].no === no) return TARGETS[i].title; return ''; }
+
+  /* 전송 이력 (전체). 현재 요청이 포함되지 않은 그룹도 검증에는 쓰이지만 목록에는 보이지 않는다. */
+  var SENT = [
+    { grp: 'GR260330_00001', no: 'SR260317_08425', sendDt: '2026-03-30', sendSt: '완료', cancelDt: '', cancelSt: '' },
+    { grp: 'GR261012_00001', no: 'SR260429_09385', sendDt: '2026-10-12', sendSt: '완료', cancelDt: '2026-10-13', cancelSt: '완료' },
+    { grp: 'GR261015_00001', no: 'SR260429_09385', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' },
+    { grp: 'GR261015_00001', no: 'SR260602_09564', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' }
+  ];
+  function isCancelled(r) { return r.cancelSt === '완료'; }
+
+  /* 그룹요청번호 = 'GR' + YYMMDD + '_' + 5자리 순번 (같은 일자 안에서 1씩 증가) */
+  function nextGroupNo() {
+    var prefix = 'GR' + TODAY.slice(2).replace(/-/g, '') + '_', max = 0;
+    SENT.forEach(function (r) { if (r.grp.indexOf(prefix) === 0) max = Math.max(max, parseInt(r.grp.slice(prefix.length), 10)); });
+    return prefix + pad(max + 1, 5);
+  }
+
+  /* 전송 검증: 선택한 SR 집합과 '정확히 같은 SR 집합'으로 묶인 그룹이 (취소되지 않은 채) 이미 있으면 실패
+     - 2개 이상 선택: 선택한 SR 들이 모두 같은 그룹에 묶여 있고 그 그룹이 선택 SR 로만 구성된 경우
+     - 1개 선택   : 그 SR 하나만으로 구성된 그룹이 있는 경우
+     - 취소상태(완료)인 그룹은 제외 */
+  function isDuplicate(nos) {
+    var groups = {};
+    SENT.forEach(function (r) {
+      if (isCancelled(r)) return;
+      (groups[r.grp] = groups[r.grp] || []).push(r.no);
+    });
+    var want = nos.slice().sort().join('|');
+    return Object.keys(groups).some(function (g) { return groups[g].slice().sort().join('|') === want; });
+  }
+
+  function renderTargets() {
+    var from = $('csrFrom').value, to = $('csrTo').value;
+    var rows = TARGETS.filter(function (t) { return (!from || t.date >= from) && (!to || t.date <= to); });
+    $('tgtBody').innerHTML = rows.map(function (t) {
+      return '<tr data-no="' + t.no + '"><td class="num"><input type="checkbox" class="tgt-chk"></td>' +
+        '<td class="num">' + t.no + '</td><td>' + t.title + '</td><td class="date">' + t.date + '</td>' +
+        '<td>' + t.user + '</td><td class="num">' + t.step + '</td></tr>';
+    }).join('') || '<tr><td class="empty" colspan="6">조회된 CSR이 없습니다.</td></tr>';
+    $('tgtChk').textContent = 0; $('tgtAll').checked = false;
+  }
+  $('tgtBody').addEventListener('change', function () {
+    $('tgtChk').textContent = $('tgtBody').querySelectorAll('.tgt-chk:checked').length;
+  });
+  $('tgtAll').addEventListener('change', function () {
+    var on = this.checked;
+    each($('tgtBody').querySelectorAll('.tgt-chk'), function (c) { c.checked = on; });
+    $('tgtChk').textContent = $('tgtBody').querySelectorAll('.tgt-chk:checked').length;
+  });
+
+  function visibleSent() {
+    var mine = {};
+    SENT.forEach(function (r) { if (r.no === CUR_SR) mine[r.grp] = true; });
+    return SENT.filter(function (r) { return mine[r.grp]; }).sort(function (a, b) {
+      return a.grp < b.grp ? 1 : a.grp > b.grp ? -1 : (a.no < b.no ? -1 : a.no > b.no ? 1 : 0);
+    });
+  }
+  function renderSent() {
+    var rows = visibleSent();
+    $('stBody').innerHTML = rows.map(function (r) {
+      var off = isCancelled(r);
+      return '<tr class="' + (off ? 'is-disabled' : '') + '" data-grp="' + r.grp + '">' +
+        '<td class="num"><input type="checkbox" class="st-chk"' + (off ? ' disabled' : '') + '></td>' +
+        '<td class="num">' + r.grp + '</td><td class="num">' + r.no + '</td>' +
+        '<td>' + titleOf(r.no) + '</td><td class="date">' + r.sendDt + '</td><td class="num">' + r.sendSt + '</td>' +
+        '<td class="date">' + r.cancelDt + '</td><td class="num">' + r.cancelSt + '</td></tr>';
+    }).join('') || '<tr><td class="empty" colspan="8">전송된 CSR이 없습니다.</td></tr>';
+    $('stTotal').textContent = rows.length; $('stAll').checked = false; syncSentSel();
+  }
+  /* 체크 시 같은 그룹요청번호 행을 함께 선택/해제 */
+  function syncSentSel() {
+    var n = 0;
+    each($('stBody').querySelectorAll('tr[data-grp]'), function (tr) {
+      var c = tr.querySelector('.st-chk'); tr.classList.toggle('selected', c.checked); if (c.checked) n++;
+    });
+    $('stChk').textContent = n;
+  }
+  $('stBody').addEventListener('change', function (e) {
+    if (!e.target.classList.contains('st-chk')) return;
+    var grp = e.target.closest('tr').dataset.grp, on = e.target.checked;
+    each($('stBody').querySelectorAll('tr[data-grp="' + grp + '"] .st-chk:not(:disabled)'), function (c) { c.checked = on; });
+    syncSentSel();
+  });
+  $('stAll').addEventListener('change', function () {
+    var on = this.checked;
+    each($('stBody').querySelectorAll('.st-chk:not(:disabled)'), function (c) { c.checked = on; });
+    syncSentSel();
+  });
+
+  /* 전송 */
+  $('btnSend').addEventListener('click', function () {
+    var nos = []; each($('tgtBody').querySelectorAll('.tgt-chk:checked'), function (c) { nos.push(c.closest('tr').dataset.no); });
+    if (!nos.length) { uiAlert('전송할 CSR을 선택하세요.'); return; }
+    if (nos.indexOf(CUR_SR) < 0) { uiAlert('현재 SR요청이 선택되지 않았습니다.'); return; }   /* 현재 요청 미포함 전송 차단 */
+    if (isDuplicate(nos)) { uiAlert('이미 등록된 SR입니다.'); return; }
+    var grp = nextGroupNo();
+    nos.forEach(function (no) { SENT.push({ grp: grp, no: no, sendDt: TODAY, sendSt: '완료', cancelDt: '', cancelSt: '' }); });
+    renderTargets(); renderSent();   /* 대상 CSR 목록은 그대로 유지(선택만 해제) */
+    uiAlert('전송되었습니다.\n그룹요청번호 ' + grp + ' (' + nos.length + '건)');
+  });
+
+  /* 전송취소 */
+  $('btnCancelSend').addEventListener('click', function () {
+    var grps = {};
+    each($('stBody').querySelectorAll('.st-chk:checked'), function (c) { grps[c.closest('tr').dataset.grp] = true; });
+    if (!Object.keys(grps).length) { uiAlert('전송취소할 항목을 선택하세요.'); return; }
+    uiConfirm('정말 취소하시겠습니까?', function () {
+      SENT.forEach(function (r) { if (grps[r.grp] && !isCancelled(r)) { r.cancelDt = TODAY; r.cancelSt = '완료'; } });
+      renderSent();
+    });
+  });
+
+  /* 팝업 열기/닫기 · 검색 */
+  function resetCsrSearch() { $('csrFrom').value = monthsAgo(6); $('csrTo').value = TODAY; }
+  $('btnCsrOpen').addEventListener('click', function () {
+    resetCsrSearch(); renderTargets(); renderSent();
+    $('csrModal').classList.add('open');
+  });
+  $('btnCsrSearch').addEventListener('click', renderTargets);
+  $('btnCsrReset').addEventListener('click', function () { resetCsrSearch(); renderTargets(); });
+  $('csrModal').addEventListener('click', function (e) {
+    if (e.target === this || e.target.hasAttribute('data-close')) this.classList.remove('open');
+  });
+})();
+</script>
+</body>
+</html>
