@@ -53,7 +53,7 @@
       <div class="subhead">
         <span class="title">요청목록</span>
         <span class="meta">[ 선택 <b id="listChk">0</b> 건 ] / [ 전체 <b id="listTotal">0</b> 건 ]</span>
-        <span class="meta">행을 더블클릭하면 상세로 이동합니다. (목업 구현: SR260429_09385)</span>
+        <span class="meta">행을 더블클릭하면 상세로 이동합니다. (목업 구현: SR260805_09385)</span>
       </div>
       <div class="grid-scroll">
         <table class="grid" style="min-width:1200px;">
@@ -84,7 +84,7 @@
     </section>
 
     <!-- =====================================================================
-         문서 2 · [SR260429_09385] 운영이관 (요청 상세)
+         문서 2 · [SR260805_09385] 운영이관 (요청 상세)
     ====================================================================== -->
     <section class="doc-panel" data-doc="detail" hidden>
 
@@ -182,7 +182,7 @@
             <div class="form-row">
               <div class="fc"><span class="fc-label">요청유형</span>
                 <select class="field" disabled><option>응용서비스요청</option></select></div>
-              <div class="fc"><span class="fc-label">요청번호</span><input class="field" readonly value="SR260429_09385"></div>
+              <div class="fc"><span class="fc-label">요청번호</span><input class="field" readonly value="SR260805_09385"></div>
               <div class="fc"><span class="fc-label">상위연계요청번호</span>
                 <div class="input-wrap"><input class="field" readonly><button class="icon-btn" disabled>↺</button></div></div>
               <div class="fc"></div>
@@ -203,10 +203,10 @@
               <div class="fc"><span class="fc-label req">업무책임자</span>
                 <div class="input-wrap"><input class="field" readonly value="NKIA 관리자"><button class="icon-btn" disabled>🔍</button><button class="icon-btn" disabled>↺</button></div></div>
               <div class="fc"><span class="fc-label req">요청일시</span>
-                <div class="input-wrap"><input class="field" readonly value="2026-04-29"><button class="icon-btn" disabled>📅</button>
+                <div class="input-wrap"><input class="field" readonly value="2026-08-05"><button class="icon-btn" disabled>📅</button>
                   <select class="field field--time" disabled><option>17</option></select><select class="field field--time" disabled><option>20</option></select></div></div>
               <div class="fc"><span class="fc-label req">완료요구일시</span>
-                <div class="input-wrap"><input class="field" readonly value="2026-05-06"><button class="icon-btn" disabled>📅</button>
+                <div class="input-wrap"><input class="field" readonly value="2026-08-12"><button class="icon-btn" disabled>📅</button>
                   <select class="field field--time" disabled><option>17</option></select><select class="field field--time" disabled><option>20</option></select></div></div>
             </div>
             <div class="form-row">
@@ -217,7 +217,7 @@
                 <div class="input-wrap"><input class="field" readonly value="NKIA 관리자"><button class="icon-btn" disabled>🔍</button><button class="icon-btn" disabled>↺</button></div></div>
             </div>
             <div class="form-row">
-              <div class="fc fc--full"><span class="fc-label req">제목</span><input class="field" readonly value="SR260429_09385"></div>
+              <div class="fc fc--full"><span class="fc-label req">제목</span><input class="field" readonly value="SR260805_09385"></div>
             </div>
             <div class="form-row">
               <div class="fc fc--full"><span class="fc-label req">요청내용</span>
@@ -363,20 +363,20 @@
   /* =====================================================================
      1. 나의작업함 (대기함 목록)
   ===================================================================== */
-  var CUR_SR = 'SR260429_09385';   /* 목업으로 상세 구현한 요청 */
+  var CUR_SR = 'SR260805_09385';   /* 목업으로 상세 구현한 요청 */
   var LIST = [
     ['SR261008_09855', '장애요청',       '승인(책임자)',     '@@ 장애 테스트',   'NKIA 관리자', 'NKIA 관리자',       '2026-10-08', '2026-10-08 11:08', ''],
     ['SR260828_09756', '변경관리',       '결과승인(검토자)', '123213',           'NKIA 관리자', 'NKIA 관리자',       '2026-08-28', '2026-08-28 15:05', ''],
     ['SR260824_09738', '응용서비스요청', '사전검토요청',     '213213213',        'EMS 관리자',  'NKIA 관리자',       '2026-08-24', '2026-08-24 17:58', ''],
     ['SR260824_09737', '응용서비스요청', '사전검토요청',     'test',             'NKIA 관리자', 'NKIA 관리자',       '2026-08-24', '2026-08-24 17:57', ''],
     ['SR260824_09736', '응용서비스요청', '사전검토요청',     'test',             'EMS 관리자',  'NKIA 관리자',       '2026-08-24', '2026-08-24 17:54', ''],
-    ['SR260727_09722', '변경관리',       '변경계획',         'GOE_0262',         'NKIA 관리자', 'NKIA 관리자',       '2026-07-27', '2026-07-27 17:25', ''],
-    ['SR260727_09719', '응용서비스요청', '분석(협)',         'tetetete',         '김혜경33',    '김혜경33,NKIA',     '2026-07-27', '2026-07-27 14:23', ''],
-    ['SR260727_09719', '응용서비스요청', '분석',             'tetetete',         '김혜경33',    '김혜경33,NKIA',     '2026-07-27', '2026-07-27 14:23', ''],
-    ['SR260608_09596', '응용서비스요청', '결과확인',         'TEST',             'NKIA 관리자', 'NKIA 관리자',       '2026-06-08', '2026-06-08 10:41', ''],
-    ['SR260605_09579', '단순문의(인프라)','문의접수',        'SR260605_09579',   '김혜경33',    'NKIA 관리자',       '2026-06-05', '2026-06-05 22:54', '✔'],
-    ['SR260605_09575', '서비스요청',     '사전검토요청',     '방화벽/VPN정책신청','NKIA 관리자','NKIA 관리자',       '2026-06-05', '2026-06-05 08:49', ''],
-    ['SR260429_09385', '응용서비스요청', '운영이관',         'SR260429_09385',   'NKIA 관리자', 'NKIA 관리자',       '2026-04-29', '2026-04-29 17:20', '']
+    ['SR260821_09722', '변경관리',       '변경계획',         'GOE_0262',         'NKIA 관리자', 'NKIA 관리자',       '2026-08-21', '2026-08-21 17:25', ''],
+    ['SR260820_09719', '응용서비스요청', '분석(협)',         'tetetete',         '김혜경33',    '김혜경33,NKIA',     '2026-08-20', '2026-08-20 14:23', ''],
+    ['SR260820_09719', '응용서비스요청', '분석',             'tetetete',         '김혜경33',    '김혜경33,NKIA',     '2026-08-20', '2026-08-20 14:23', ''],
+    ['SR260818_09596', '응용서비스요청', '결과확인',         'TEST',             'NKIA 관리자', 'NKIA 관리자',       '2026-08-18', '2026-08-18 10:41', ''],
+    ['SR260814_09579', '단순문의(인프라)','문의접수',        'SR260814_09579',   '김혜경33',    'NKIA 관리자',       '2026-08-14', '2026-08-14 22:54', '✔'],
+    ['SR260814_09575', '서비스요청',     '사전검토요청',     '방화벽/VPN정책신청','NKIA 관리자','NKIA 관리자',       '2026-08-14', '2026-08-14 08:49', ''],
+    ['SR260805_09385', '응용서비스요청', '운영이관',         'SR260805_09385',   'NKIA 관리자', 'NKIA 관리자',       '2026-08-05', '2026-08-05 17:20', '']
   ];
   var listView = LIST.slice();
 
@@ -438,24 +438,24 @@
   });
 
   /* =====================================================================
-     3. 절차 흐름도 (원본 SR260429_09385 이력) · 이전 단계 접기 패널
+     3. 절차 흐름도 (원본 SR260805_09385 이력) · 이전 단계 접기 패널
   ===================================================================== */
   var USER = 'NKIA 관리자';
   var FLOW = [
-    { name: '요청등록',               s: '2026-04-29 17:20', e: '2026-04-29 17:20' },
-    { name: '사전검토요청',           s: '2026-04-29 17:20', e: '2026-04-29 17:21' },
-    { name: '요청부서 책임자승인',    s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
-    { name: '관리부서 책임자승인',    s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
-    { name: '접수',                   s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
-    { name: '분석',                   s: '2026-04-29 17:21', e: '2026-04-29 17:22' },
-    { name: '[협업] 분석(협)',        s: '2026-04-29 17:21', e: '2026-04-29 17:21' },
-    { name: '개발부서 책임자승인',    s: '2026-04-29 17:22', e: '2026-04-29 17:22' },
-    { name: '설계/개발',              s: '2026-04-29 17:22', e: '2026-04-29 17:23' },
-    { name: '[협업] 설계/개발(협)',   s: '2026-04-29 17:22', e: '2026-04-29 17:22' },
-    { name: '3자 단위테스트',         s: '2026-04-29 17:23', e: '2026-04-29 17:23' },
-    { name: '[협업] 3자 단위테스트(협)', s: '2026-04-29 17:23', e: '2026-04-29 17:23' },
-    { name: '사용자승인 테스트',      s: '2026-04-29 17:23', e: '2026-04-29 17:23' },
-    { name: '운영이관',               s: '2026-04-29 17:23', e: '' }
+    { name: '요청등록',               s: '2026-08-05 17:20', e: '2026-08-05 17:20' },
+    { name: '사전검토요청',           s: '2026-08-05 17:20', e: '2026-08-05 17:21' },
+    { name: '요청부서 책임자승인',    s: '2026-08-05 17:21', e: '2026-08-05 17:21' },
+    { name: '관리부서 책임자승인',    s: '2026-08-05 17:21', e: '2026-08-05 17:21' },
+    { name: '접수',                   s: '2026-08-05 17:21', e: '2026-08-05 17:21' },
+    { name: '분석',                   s: '2026-08-05 17:21', e: '2026-08-05 17:22' },
+    { name: '[협업] 분석(협)',        s: '2026-08-05 17:21', e: '2026-08-05 17:21' },
+    { name: '개발부서 책임자승인',    s: '2026-08-05 17:22', e: '2026-08-05 17:22' },
+    { name: '설계/개발',              s: '2026-08-05 17:22', e: '2026-08-05 17:23' },
+    { name: '[협업] 설계/개발(협)',   s: '2026-08-05 17:22', e: '2026-08-05 17:22' },
+    { name: '3자 단위테스트',         s: '2026-08-05 17:23', e: '2026-08-05 17:23' },
+    { name: '[협업] 3자 단위테스트(협)', s: '2026-08-05 17:23', e: '2026-08-05 17:23' },
+    { name: '사용자승인 테스트',      s: '2026-08-05 17:23', e: '2026-08-05 17:23' },
+    { name: '운영이관',               s: '2026-08-05 17:23', e: '' }
   ];
   var ACTIVE = FLOW.length - 1;
   function info(t, v) {
@@ -500,22 +500,22 @@
        - 대상 CSR   : 현재 요청과 동일한 업무코드(BIZ)의 CSR 전체, 요청일 기간으로 검색
        - CSR 전송 현황 : 현재 요청번호(CUR_SR)를 포함한 그룹만, 그룹요청번호 내림차순
   ===================================================================== */
-  var BIZ = { code: 'SFZ', name: '1회용교통카드' };   /* SR260429_09385 의 업무 */
+  var BIZ = { code: 'SFZ', name: '1회용교통카드' };   /* SR260805_09385 의 업무 */
   var TARGETS = [
-    { no: 'SR260429_09385', title: 'SR260429_09385',                       date: '2026-04-29', user: 'NKIA 관리자', step: '운영이관' },
-    { no: 'SR260601_09563', title: '@@test@@test@@test@@test@@test@@test', date: '2026-06-01', user: 'NKIA 관리자', step: '설계/개발' },
-    { no: 'SR260602_09564', title: 'SR260602_09564',                       date: '2026-06-02', user: 'NKIA 관리자', step: '요청종료' },
-    { no: 'SR260608_09595', title: 'SR260608_09595',                       date: '2026-06-08', user: '김혜경33',    step: '요청종료' },
-    { no: 'SR260317_08425', title: 'SR260317_08420',                       date: '2026-03-17', user: 'NKIA 관리자', step: '요청종료' }
+    { no: 'SR260805_09385', title: 'SR260805_09385',                       date: '2026-08-05', user: 'NKIA 관리자', step: '운영이관' },
+    { no: 'SR260811_09563', title: '@@test@@test@@test@@test@@test@@test', date: '2026-08-11', user: 'NKIA 관리자', step: '설계/개발' },
+    { no: 'SR260812_09564', title: 'SR260812_09564',                       date: '2026-08-12', user: 'NKIA 관리자', step: '요청종료' },
+    { no: 'SR260818_09595', title: 'SR260818_09595',                       date: '2026-08-18', user: '김혜경33',    step: '요청종료' },
+    { no: 'SR260803_08425', title: 'SR260803_08420',                       date: '2026-08-03', user: 'NKIA 관리자', step: '요청종료' }
   ];
   function titleOf(no) { for (var i = 0; i < TARGETS.length; i++) if (TARGETS[i].no === no) return TARGETS[i].title; return ''; }
 
   /* 전송 이력 (전체). 현재 요청이 포함되지 않은 그룹도 검증에는 쓰이지만 목록에는 보이지 않는다. */
   var SENT = [
-    { grp: 'GR260330_00001', no: 'SR260317_08425', sendDt: '2026-03-30', sendSt: '완료', cancelDt: '', cancelSt: '' },
-    { grp: 'GR261012_00001', no: 'SR260429_09385', sendDt: '2026-10-12', sendSt: '완료', cancelDt: '2026-10-13', cancelSt: '완료' },
-    { grp: 'GR261015_00001', no: 'SR260429_09385', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' },
-    { grp: 'GR261015_00001', no: 'SR260602_09564', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' }
+    { grp: 'GR260804_00001', no: 'SR260803_08425', sendDt: '2026-08-03', sendSt: '완료', cancelDt: '', cancelSt: '' },
+    { grp: 'GR261012_00001', no: 'SR260805_09385', sendDt: '2026-10-12', sendSt: '완료', cancelDt: '2026-10-13', cancelSt: '완료' },
+    { grp: 'GR261015_00001', no: 'SR260805_09385', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' },
+    { grp: 'GR261015_00001', no: 'SR260812_09564', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' }
   ];
   function isCancelled(r) { return r.cancelSt === '완료'; }
 
@@ -602,7 +602,7 @@
   $('btnSend').addEventListener('click', function () {
     var nos = []; each($('tgtBody').querySelectorAll('.tgt-chk:checked'), function (c) { nos.push(c.closest('tr').dataset.no); });
     if (!nos.length) { uiAlert('전송할 CSR을 선택하세요.'); return; }
-    if (nos.indexOf(CUR_SR) < 0) { uiAlert('현재 [SR260429_09385] 선택은 필수입니다.'); return; }   /* 현재 요청 미포함 전송 차단 */
+    if (nos.indexOf(CUR_SR) < 0) { uiAlert('현재 요청번호 [SR260805_09385] 선택은 필수입니다.'); return; }   /* 현재 요청 미포함 전송 차단 */
     if (isDuplicate(nos)) { uiAlert('이미 전송된 요청번호입니다.'); return; }
     var grp = nextGroupNo();
     nos.forEach(function (no) { SENT.push({ grp: grp, no: no, sendDt: TODAY, sendSt: '완료', cancelDt: '', cancelSt: '' }); });
