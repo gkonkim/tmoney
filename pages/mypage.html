@@ -513,15 +513,15 @@
   /* 전송 이력 (전체). 현재 요청이 포함되지 않은 그룹도 검증에는 쓰이지만 목록에는 보이지 않는다. */
   var SENT = [
     { grp: 'GR260804_00001', no: 'SR260803_08425', sendDt: '2026-08-03', sendSt: '완료', cancelDt: '', cancelSt: '' },
-    { grp: 'GR261012_00001', no: 'SR260805_09385', sendDt: '2026-10-12', sendSt: '완료', cancelDt: '2026-10-13', cancelSt: '완료' },
-    { grp: 'GR261015_00001', no: 'SR260805_09385', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' },
-    { grp: 'GR261015_00001', no: 'SR260812_09564', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' }
+    { grp: 'GR261012_00002', no: 'SR260805_09385', sendDt: '2026-10-12', sendSt: '완료', cancelDt: '2026-10-13', cancelSt: '완료' },
+    { grp: 'GR261015_00003', no: 'SR260805_09385', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' },
+    { grp: 'GR261015_00003', no: 'SR260812_09564', sendDt: '2026-10-15', sendSt: '완료', cancelDt: '', cancelSt: '' }
   ];
   function isCancelled(r) { return r.cancelSt === '완료'; }
 
   /* 그룹요청번호 = 'GR' + YYMMDD + '_' + 5자리 순번 (같은 일자 안에서 1씩 증가) */
   function nextGroupNo() {
-    var prefix = 'GR' + TODAY.slice(2).replace(/-/g, '') + '_', max = 0;
+    var prefix = 'GR' + TODAY.slice(2).replace(/-/g, '') + '_', max = 3;
     SENT.forEach(function (r) { if (r.grp.indexOf(prefix) === 0) max = Math.max(max, parseInt(r.grp.slice(prefix.length), 10)); });
     return prefix + pad(max + 1, 5);
   }
