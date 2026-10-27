@@ -602,8 +602,8 @@
   $('btnSend').addEventListener('click', function () {
     var nos = []; each($('tgtBody').querySelectorAll('.tgt-chk:checked'), function (c) { nos.push(c.closest('tr').dataset.no); });
     if (!nos.length) { uiAlert('전송할 CSR을 선택하세요.'); return; }
-    if (nos.indexOf(CUR_SR) < 0) { uiAlert('현재 SR요청이 선택되지 않았습니다.'); return; }   /* 현재 요청 미포함 전송 차단 */
-    if (isDuplicate(nos)) { uiAlert('이미 등록된 SR입니다.'); return; }
+    if (nos.indexOf(CUR_SR) < 0) { uiAlert('현재 [SR260429_09385] 선택은 필수입니다.'); return; }   /* 현재 요청 미포함 전송 차단 */
+    if (isDuplicate(nos)) { uiAlert('이미 전송된 요청번호입니다.'); return; }
     var grp = nextGroupNo();
     nos.forEach(function (no) { SENT.push({ grp: grp, no: no, sendDt: TODAY, sendSt: '완료', cancelDt: '', cancelSt: '' }); });
     renderTargets(); renderSent();   /* 대상 CSR 목록은 그대로 유지(선택만 해제) */
@@ -622,7 +622,7 @@
   });
 
   /* 팝업 열기/닫기 · 검색 */
-  function resetCsrSearch() { $('csrFrom').value = monthsAgo(6); $('csrTo').value = TODAY; }
+  function resetCsrSearch() { $('csrFrom').value = monthsAgo(3); $('csrTo').value = TODAY; }
   $('btnCsrOpen').addEventListener('click', function () {
     resetCsrSearch(); renderTargets(); renderSent();
     $('csrModal').classList.add('open');
